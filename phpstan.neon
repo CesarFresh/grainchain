@@ -1,0 +1,43 @@
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+
+parameters:
+    paths:
+        - app
+        - tests
+        - database
+        - config
+        - routes
+    level: 6
+    tmpDir: var/cache/phpstan
+    reportUnmatchedIgnoredErrors: false
+    checkModelProperties: true
+    exceptions:
+        implicitThrows: false
+        check:
+            missingCheckedExceptionInThrows: true
+            tooWideThrowType: true
+        uncheckedExceptionClasses:
+            - 'LogicException'
+            - 'RuntimeException'
+            - 'Error'
+    ignoreErrors:
+        - '#Static call to instance method Illuminate\\Database\\Eloquent#'
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::metaHas\(\)#'
+        - '#PHPDoc tag @mixin contains generic class Illuminate\\Database\\Eloquent\\Builder but does not specify its types: TModelClass#'
+        - '#Unable to resolve the template type TKey in call to function collect#'
+        - '#Unable to resolve the template type TValue in call to function collect#'
+        - 
+            message: '#^Undefined variable: \$this#'
+            path: routes/console.php
+        - 
+            message: '#^PHPDoc tag @return contains unresolvable type.#'
+            path: database\factories\UserFactory.php
+        -
+            message: '#Method [^(]+\(\) has no return typehint specified.#'
+            path: database/migrations/*
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
+    universalObjectCratesClasses:
+        - Stripe\StripeObject
+        - Illuminate\Database\Eloquent\Model
