@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LigthbulbDistribution;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('index');
 });
+
+Route::get('index', ['uses' => 'App\Http\Controllers\LigthbulbDistribution@index', 'as' => 'index']);
+Route::post('store', ['uses' => 'App\Http\Controllers\LigthbulbDistribution@store', 'as' => 'store']);
